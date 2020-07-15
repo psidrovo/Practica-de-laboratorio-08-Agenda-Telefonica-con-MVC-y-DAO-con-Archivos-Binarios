@@ -3,6 +3,7 @@ package ec.edu.ups.controlador;
 
 import ec.edu.ups.dao.TelefonoDao;
 import ec.edu.ups.modelo.Telefono;
+import ec.edu.ups.modelo.Usuario;
 import java.util.List;
 
 /**
@@ -17,40 +18,45 @@ public class ControladorTelefono {
 
     private TelefonoDao telefonoDao;
     private Telefono telefono;
+    private Usuario usuario;
     
     public ControladorTelefono() {
     }
     /**
-     * Constructor.
+     * Constructor.Este constructor nos permite crear el controlador telefono y que disponga
+ de vistaTelefono y de TelefonoDao
      * 
-     * Este constructor nos permite crear el controlador telefono y que disponga
-     * de vistaTelefono y de TelefonoDao
      * 
-     * @param vistaT
+     * @param usuario
      * @param telefonoDao 
      */
-    public ControladorTelefono(TelefonoDao telefonoDao) {   
+    public ControladorTelefono(TelefonoDao telefonoDao, Usuario usuario) {   
         this.telefonoDao=telefonoDao;
+        this.usuario=usuario;
     }
     
     /**
-     * Metodo crearNuevoTelefono.
+     * Metodo crearNuevoTelefono.Este metodo nos ayuda a crear un nuevo telefono y agregarlo
+ a la lista general
      * 
-     * Este metodo nos ayuda a crear un nuevo telefono y agregarlo
-     * a la lista general
-     * 
-     * @return 
+     *
+     * @param codigo 
+     * @param numero 
+     * @param tipo 
+     * @param operadora 
      */
     public void crearNuevoTelefono(int codigo, String numero, String tipo, String operadora) {
         telefono=new Telefono(codigo, numero, tipo, operadora);
+        telefono.setUsuario(usuario);
         telefonoDao.create(telefono);        
     }
 
     /**
-     * Metodo verTelefono.
+     * Metodo verTelefono.Este metodo nos imprime el telefno con el codigo que le pasamos
      * 
-     * Este metodo nos imprime el telefno con el codigo que le pasamos
-     * 
+     *
+     * @param codigo 
+     * @return  
      */
     public Telefono verTelefono(int codigo) {
         telefono = telefonoDao.read(codigo);
@@ -58,40 +64,43 @@ public class ControladorTelefono {
     }
 
     /**
-     * Metodo actualizar.
+     * Metodo actualizar.Este metodo lo que hace es actualizar nuestra lista de telefonos.
      * 
-     * Este metodo lo que hace es actualizar nuestra lista de telefonos.
-     * 
-     * @return 
+     *
+     * @param codigo 
+     * @param numero 
+     * @param tipo 
+     * @param operadora 
      */
-    /*
+    
     public void actualizar(int codigo, String numero, String tipo, String operadora) {
         telefono = new Telefono(codigo, numero, tipo, operadora);
+        telefono.setUsuario(usuario);
         telefonoDao.update(telefono);
     }
-    */
+    
     /**
-     * Metodo eliminar.
+     * Metodo eliminar.Este metodo es llamada para eliminar un telefono del directorio.
      * 
-     * Este metodo es llamada para eliminar un telefono del directorio.
-     * 
-     * @return 
-     *//*
-    public int eliminar(int codigo) {
-        //telefono = vistaTelefono.eliminarTelefono();
+     * @param codigo
+     */
+    public void eliminar(int codigo) {
         telefonoDao.delete(codigo);
-        return telefono.getCodigo();
     }
-*/
+
     /**
      * Metodo verTelefonos.
      * 
      * Este metodo nos ayuda a imprimir la lista de telefonos.
+     *
+     * @return List Telefono
      */
-    public List<Telefono> verTelefonos() {
-        List<Telefono> telefonos;
-        telefonos = telefonoDao.todosTelefonos();
-        return telefonos;
+    public List<Telefono> verTelefonosGeneral() {
+        return telefonoDao.todosTelefonosGeneral();
+    }
+    
+    public List<Telefono> verTelefonosUsuario() {
+        return telefonoDao.listaTelefonosUsuario(usuario);
     }
 
     public int getCodigoSiguiente(){

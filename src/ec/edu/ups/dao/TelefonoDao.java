@@ -137,7 +137,7 @@ public class TelefonoDao implements ITelefono {
     }
 
     @Override
-    public List<Telefono> todosTelefonos() {
+    public List<Telefono> todosTelefonosGeneral() {
         List <Telefono> todosLosTelefonos= new ArrayList<>();
         int salto = 0;
         try {
@@ -151,6 +151,7 @@ public class TelefonoDao implements ITelefono {
                 String cedula = archivo.readUTF();                
                 salto += tamanioRegistro;
             }
+            return todosLosTelefonos;
         } catch (IOException ex) {
             System.out.println("Error escritura y lectura [read DAOTelefono]");
         }
@@ -169,5 +170,27 @@ public class TelefonoDao implements ITelefono {
             System.out.println(ex);
         }
         return codigo;
+    }
+
+    @Override
+    public List<Telefono> listaTelefonosUsuario(Usuario usuarioControlador) {
+        List <Telefono> todosLosTelefonos= new ArrayList<>();
+        int salto = 85;
+        try {
+            while (salto < archivo.length()) {
+                archivo.seek(salto);
+                telefonoInterno.setCodigo(archivo.readInt());
+                telefonoInterno.setNumero(archivo.readUTF());
+                telefonoInterno.setOperadora(archivo.readUTF());
+                telefonoInterno.setTipo(archivo.readUTF());
+                
+                String cedula = archivo.readUTF();                
+                salto += tamanioRegistro;
+            }
+            return todosLosTelefonos;
+        } catch (IOException ex) {
+            System.out.println("Error escritura y lectura [read DAOTelefono]");
+        }
+        return null;
     }
 }

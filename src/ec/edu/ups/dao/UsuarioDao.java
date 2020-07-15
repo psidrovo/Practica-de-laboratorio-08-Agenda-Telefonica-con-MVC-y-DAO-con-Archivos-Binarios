@@ -23,13 +23,13 @@ public class UsuarioDao implements IUsuario {
     // (string) = 178 bytes + 10 bytes 
     // Total 188
     private RandomAccessFile archivo;
-    private Usuario usuarioDao;
+    private Usuario usuarioInterno;
     private int tamanioRegistro;
 
-    public UsuarioDao() {
+    public UsuarioDao(Usuario usuario) {
         try {
             archivo = new RandomAccessFile("datos/usuarios.dat", "rw");
-            usuarioDao = new Usuario();
+            usuarioInterno = usuario;
             tamanioRegistro=188;
         } catch (FileNotFoundException ex) {
             System.out.println("Error escritura y lectura [DaoUsuario]");
@@ -59,13 +59,13 @@ public class UsuarioDao implements IUsuario {
         try {
             while (salto < archivo.length()) {
                 archivo.seek(salto);
-                usuarioDao.setCedula(archivo.readUTF());
-                usuarioDao.setNombre(archivo.readUTF());
-                usuarioDao.setApellido(archivo.readUTF());
-                usuarioDao.setCorreo(archivo.readUTF());
-                usuarioDao.setContrasena(archivo.readUTF());
-                if (credenciales.equals(usuarioDao.getCorreo() + usuarioDao.getContrasena())) {
-                    return usuarioDao;
+                usuarioInterno.setCedula(archivo.readUTF());
+                usuarioInterno.setNombre(archivo.readUTF());
+                usuarioInterno.setApellido(archivo.readUTF());
+                usuarioInterno.setCorreo(archivo.readUTF());
+                usuarioInterno.setContrasena(archivo.readUTF());
+                if (credenciales.equals(usuarioInterno.getCorreo() + usuarioInterno.getContrasena())) {
+                    return usuarioInterno;
                 }
                 salto += tamanioRegistro;
             }
@@ -81,8 +81,8 @@ public class UsuarioDao implements IUsuario {
         try {
             while (salto < archivo.length()) {
                 archivo.seek(salto);
-                usuarioDao.setCedula(archivo.readUTF());
-                if (usuarioControlador.getCedula().equals(usuarioDao.getCedula())) {
+                usuarioInterno.setCedula(archivo.readUTF());
+                if (usuarioControlador.getCedula().equals(usuarioInterno.getCedula())) {
                     archivo.seek(salto + 12);
                     archivo.writeUTF(usuarioControlador.getNombre());
                     archivo.writeUTF(usuarioControlador.getApellido());
@@ -100,6 +100,29 @@ public class UsuarioDao implements IUsuario {
     @Override
     public void delete(String credencial) {
 
+    }
+
+    @Override
+    public Usuario buscarCedula(String cedula) {
+        Usuario usuarioBusqueda = new Usuario();
+        int salto = 0;
+        try {
+            while (salto < archivo.length()) {
+                archivo.seek(salto);
+                usuarioBusqueda.setCedula(archivo.readUTF());
+                usuarioBusqueda.setNombre(archivo.readUTF());
+                usuarioBusqueda.setApellido(archivo.readUTF());
+                usuarioBusqueda.setCorreo(archivo.readUTF());
+                usuarioBusqueda.setContrasena(archivo.readUTF());
+                if (cedula.equals(usuarioBusqueda.getCedula())) {
+                    return usuarioBusqueda;
+                }
+                salto += tamanioRegistro;
+            }
+        } catch (IOException ex) {
+            System.out.println("Error escritura y lectura [buscarCedula DAOUsuario]");
+        }
+        return null;
     }
 
 }

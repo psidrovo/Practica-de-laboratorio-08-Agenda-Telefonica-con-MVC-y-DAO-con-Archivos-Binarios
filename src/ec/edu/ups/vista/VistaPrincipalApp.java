@@ -14,11 +14,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JTextField;
 
 /**
  *
@@ -33,6 +29,7 @@ public class VistaPrincipalApp extends javax.swing.JFrame {
     private VistaRegistrar resgistrar;
     private VistaEditarUsuario editarUsuario;
     //Dao
+    private Usuario usuario;
     private TelefonoDao daoTelefono;
     private UsuarioDao daoUsuario;
     //Controlador
@@ -48,10 +45,11 @@ public class VistaPrincipalApp extends javax.swing.JFrame {
         lblFondo.setSize(screenSize);
         lblTitulo.setBounds(10, (int) screenSize.getHeight() - 200, 1000, 40);
         lblUsuarioLogin.setBounds(10, (int) screenSize.getHeight() - 275, 1500, 40);
-        //CREAR DAO Y CONTROLADORES
-        daoTelefono = new TelefonoDao();
-        daoUsuario = new UsuarioDao();
-        controladorTelefono = new ControladorTelefono(daoTelefono);
+        //CREAR DAO Y CONTROLADORES     
+        usuario= new Usuario();
+        daoUsuario = new UsuarioDao(usuario);
+        daoTelefono = new TelefonoDao(daoUsuario);
+        controladorTelefono = new ControladorTelefono(daoTelefono,usuario);
         controladorUsuario = new ControladorUsuario(daoUsuario, daoTelefono);
 
         //CREAR VISTAS

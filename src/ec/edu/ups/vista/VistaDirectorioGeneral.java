@@ -255,7 +255,7 @@ public class VistaDirectorioGeneral extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btListarTodosActionPerformed
     
     public void ActualizarTabla() {
-        List<Telefono> listaTelefonos = controladorTelefono.verTelefonos();
+        List<Telefono> listaTelefonos = controladorTelefono.verTelefonosGeneral();
         
         DefaultTableModel modelo = (DefaultTableModel) tblDirectorioGeneral.getModel();
         modelo.setRowCount(0);
