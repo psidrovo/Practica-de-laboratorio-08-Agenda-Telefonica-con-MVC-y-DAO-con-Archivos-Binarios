@@ -186,23 +186,27 @@ public class VistaRegistrar extends javax.swing.JInternalFrame {
         for (int x = 0; x < confirmar2.length; x++) {
             confirmar += confirmar2[x];
         }
-        if (confirmar.equals(password)) {
+        if (confirmar.equals(password)&& confirmar.length()==8) {
 
             if (txtNombre.getText().equals("") || password.equals("") || txtApellido.getText().equals("") || txtCedula.getText().equals("") || txtCorreo.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "LLENE TODOS LOS CAMPOS", "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
-                controladorUsuario.registrar(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), password);
-                this.setVisible(false);
-                txtApellido.setText("");
-                txtCedula.setText("");
-                txtCorreo.setText("");
-                txtNombre.setText("");
-                pwsConfirmar.setText("");
-                pwsPassword.setText("");
-                JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
+                if(txtCedula.getText().length()==10){
+                    controladorUsuario.registrar(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtCorreo.getText(), password);
+                    this.setVisible(false);
+                    txtApellido.setText("");
+                    txtCedula.setText("");
+                    txtCorreo.setText("");
+                    txtNombre.setText("");
+                    pwsConfirmar.setText("");
+                    pwsPassword.setText("");
+                    JOptionPane.showMessageDialog(null, "REGISTRO EXITOSO", "REGISTRO", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "TAMAÑO DE CEDULA NO VALIDO", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } else {
-            JOptionPane.showMessageDialog(null, "CONTRASEÑAS NO CONINCIDEN", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "CONTRASEÑAS NO CONINCIDEN O NO TIENEN 8 CARACTERES", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btRegistrarActionPerformed
 

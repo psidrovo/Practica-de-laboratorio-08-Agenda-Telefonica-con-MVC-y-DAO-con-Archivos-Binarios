@@ -67,10 +67,10 @@ public class Usuario {
         this.contrasena = contrasena;
     }
     
-    public void actualizarDatos (String nombre, String apellido, String cedula) {
+    public void actualizarDatos (String nombre, String apellido, String correo) {
         setNombre(nombre);
         setApellido(apellido);
-        setCedula(cedula);
+        setCorreo(correo);
     }
     
     
