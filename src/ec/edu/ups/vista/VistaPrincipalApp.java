@@ -50,7 +50,7 @@ public class VistaPrincipalApp extends javax.swing.JFrame {
         usuario= new Usuario();
         daoUsuario = new UsuarioDao(usuario);
         daoTelefono = new TelefonoDao(daoUsuario);
-        controladorTelefono = new ControladorTelefono(daoTelefono,usuario);
+        controladorTelefono = new ControladorTelefono(daoTelefono,usuario,daoUsuario);
         controladorUsuario = new ControladorUsuario(daoUsuario, daoTelefono, usuario);
 
         //CREAR VISTAS

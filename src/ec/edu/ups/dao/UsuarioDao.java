@@ -55,7 +55,7 @@ public class UsuarioDao implements IUsuario {
 
     @Override
     public Usuario read(String credenciales) {
-        int salto = 116;
+        int salto = 0;
         try {
             while (salto < archivo.length()) {
                 archivo.seek(salto);
@@ -93,7 +93,7 @@ public class UsuarioDao implements IUsuario {
                 salto += tamanioRegistro;
             }
         } catch (IOException ex) {
-            System.out.println("Error escritura y lectura [read DAOUsuario]");
+            System.out.println("Error escritura y lectura [update DAOUsuario]");
         }
     }
 
@@ -121,6 +121,29 @@ public class UsuarioDao implements IUsuario {
             }
         } catch (IOException ex) {
             System.out.println("Error escritura y lectura [buscarCedula DAOUsuario]");
+        }
+        return null;
+    }
+    
+    @Override
+    public Usuario buscarCorreo(String correo) {
+        Usuario usuarioBusqueda = new Usuario();
+        int salto = 0;
+        try {
+            while (salto < archivo.length()) {
+                archivo.seek(salto);
+                usuarioBusqueda.setCedula(archivo.readUTF());
+                usuarioBusqueda.setNombre(archivo.readUTF());
+                usuarioBusqueda.setApellido(archivo.readUTF());
+                usuarioBusqueda.setCorreo(archivo.readUTF());
+                usuarioBusqueda.setContrasena(archivo.readUTF());
+                if (correo.equals(usuarioBusqueda.getCorreo())) {
+                    return usuarioBusqueda;
+                }
+                salto += tamanioRegistro;
+            }
+        } catch (IOException ex) {
+            System.out.println("Error escritura y lectura [buscarCorreo DAOUsuario]");
         }
         return null;
     }

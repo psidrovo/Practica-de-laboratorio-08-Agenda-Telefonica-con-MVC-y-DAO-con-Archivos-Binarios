@@ -233,8 +233,8 @@
                 <StringItem index="3" value="FAX"/>
                 <StringItem index="4" value="CASA"/>
                 <StringItem index="5" value="TRABAJO"/>
-                <StringItem index="6" value="FAX CASA"/>
-                <StringItem index="7" value="FAX TRABAJO"/>
+                <StringItem index="6" value="FAX_CASA"/>
+                <StringItem index="7" value="FAX_TRABAJO"/>
                 <StringItem index="8" value="LOCALIZADOR"/>
               </StringArray>
             </Property>

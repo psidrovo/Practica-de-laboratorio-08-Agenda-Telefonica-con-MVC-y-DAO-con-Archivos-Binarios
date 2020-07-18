@@ -107,7 +107,7 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
         txtCodigo.setDisabledTextColor(new java.awt.Color(153, 204, 255));
 
         cmbTipo.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR", "FIJO", "MOVIL", "FAX", "CASA", "TRABAJO", "FAX CASA", "FAX TRABAJO", "LOCALIZADOR" }));
+        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR", "FIJO", "MOVIL", "FAX", "CASA", "TRABAJO", "FAX_CASA", "FAX_TRABAJO", "LOCALIZADOR" }));
         cmbTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbTipoActionPerformed(evt);
@@ -334,7 +334,7 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
                 || cmbTipo.getSelectedItem().toString().equals("SELECCIONAR") || cmbOperadora.getSelectedItem().toString().equals("SELECCIONAR")) {
             JOptionPane.showMessageDialog(null, "LLENE TODOS LOS CAMPOS", "AGREGADO", JOptionPane.ERROR_MESSAGE);
         } else {
-            controladorUsuario.agregarTelefono(Integer.valueOf(txtCodigo.getText()), txtNumero.getValue().toString(),
+            controladorTelefono.crearNuevoTelefono(Integer.valueOf(txtCodigo.getText()), txtNumero.getValue().toString(),
                     cmbTipo.getSelectedItem().toString(), cmbOperadora.getSelectedItem().toString());
             JOptionPane.showMessageDialog(null, "TELEFONO AGREGADO CORRECTAMENTE", "AGREGADO", JOptionPane.INFORMATION_MESSAGE);
             Limpiar();
@@ -353,7 +353,7 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
                 || cmbTipo.getSelectedItem().toString().equals("SELECCIONAR") || cmbOperadora.getSelectedItem().toString().equals("SELECCIONAR")) {
             JOptionPane.showMessageDialog(null, "LLENE TODOS LOS CAMPOS", "EDITAR", JOptionPane.ERROR_MESSAGE);
         } else {
-            controladorUsuario.actualizarTelefono(Integer.valueOf(txtCodigo.getText()), txtNumero.getText(),
+            controladorTelefono.actualizar(Integer.valueOf(txtCodigo.getText()), txtNumero.getText(),
                     cmbTipo.getSelectedItem().toString(), cmbOperadora.getSelectedItem().toString());
 
             JOptionPane.showMessageDialog(null, "TELEFONO AGREGADO CORRECTAMENTE", "AGREGADO", JOptionPane.INFORMATION_MESSAGE);
@@ -364,7 +364,7 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btActualizarActionPerformed
 
     public void ActualizarTabla() {
-        List<Telefono> listaTelefonos = controladorUsuario.verTelefonos();
+        List<Telefono> listaTelefonos = controladorTelefono.verTelefonosUsuario();
 
         DefaultTableModel modelo = (DefaultTableModel) tblDirectorio.getModel();
         modelo.setRowCount(0);
@@ -382,35 +382,35 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
     }
     private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
 
-        int codigoBuscar =Integer.valueOf(txtCodigoBuscar.getText());
+        int codigoBuscar = Integer.valueOf(txtCodigoBuscar.getText());
         int filasTabla = tblDirectorio.getRowCount();
         boolean bandera = true;
-        
+
         for (int i = 0; i < filasTabla; i++) {
             int codigoTabla = Integer.valueOf(tblDirectorio.getValueAt(i, 0).toString());
-            if(codigoBuscar==codigoTabla){
-                bandera=false;
+            if (codigoBuscar == codigoTabla) {
+                bandera = false;
                 tblDirectorio.setRowSelectionInterval(i, i);
                 editarDatos(i);
                 break;
-            }            
+            }
         }
-        if(bandera){
-             JOptionPane.showMessageDialog(null, "VALOR NO ENCONTRADO", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }        
+        if (bandera) {
+            JOptionPane.showMessageDialog(null, "VALOR NO ENCONTRADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btBuscarActionPerformed
 
     private void tblDirectorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDirectorioMouseClicked
-        int fila = tblDirectorio.getSelectedRow(); 
+        int fila = tblDirectorio.getSelectedRow();
         editarDatos(fila);
     }//GEN-LAST:event_tblDirectorioMouseClicked
 
-    public void editarDatos(int fila){
+    public void editarDatos(int fila) {
         txtCodigo.setText(tblDirectorio.getValueAt(fila, 0).toString());
         cmbOperadora.setEnabled(true);
         cmbTipo.setEnabled(true);
         try {
-            switch (tblDirectorio.getValueAt(fila, 2).toString()) {
+            switch (tblDirectorio.getValueAt(fila, 2).toString().replace(" ", "")) {
                 case "FIJO":
                     cmbTipo.setSelectedIndex(1);
                     txtNumero.setFormatterFactory(
@@ -441,13 +441,13 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
                             new javax.swing.text.DefaultFormatterFactory(
                                     new javax.swing.text.MaskFormatter("(+593)#-###-####")));
                     break;
-                case "FX CASA":
+                case "FAX_CASA":
                     cmbTipo.setSelectedIndex(6);
                     txtNumero.setFormatterFactory(
                             new javax.swing.text.DefaultFormatterFactory(
                                     new javax.swing.text.MaskFormatter("FX (+593)##-###-####")));
                     break;
-                case "FX TRABAJO":
+                case "FAX_TRABAJO":
                     cmbTipo.setSelectedIndex(7);
                     txtNumero.setFormatterFactory(
                             new javax.swing.text.DefaultFormatterFactory(
@@ -467,8 +467,8 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
         } catch (ParseException ex) {
             Logger.getLogger(VistaMiDirectorio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        txtNumero.setValue(tblDirectorio.getValueAt(fila, 1).toString());
-        switch (tblDirectorio.getValueAt(fila, 3).toString()) {
+        txtNumero.setValue(tblDirectorio.getValueAt(fila, 1).toString());       
+        switch (tblDirectorio.getValueAt(fila, 3).toString().replace(" ", "")) {
             case "MOVISTAR":
                 cmbOperadora.setSelectedIndex(1);
                 break;
@@ -485,7 +485,7 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
                 cmbOperadora.setSelectedIndex(5);
                 break;
             default:
-                cmbOperadora.setSelectedIndex(6);
+                cmbOperadora.setSelectedIndex(0);
                 break;
         }
         btActualizar.setEnabled(true);
@@ -499,7 +499,7 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
             txtNumero.setEnabled(true);
             txtNumero.setValue("");
             String tipo = (String) cmbTipo.getSelectedItem();
-            switch (tipo) {
+            switch (tipo.replace(" ", "")) {
                 case "FIJO":
                     txtNumero.setFormatterFactory(
                             new javax.swing.text.DefaultFormatterFactory(
@@ -525,12 +525,12 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
                             new javax.swing.text.DefaultFormatterFactory(
                                     new javax.swing.text.MaskFormatter("(+593)#-###-####")));
                     break;
-                case "FX CASA":
+                case "FAX_CASA":
                     txtNumero.setFormatterFactory(
                             new javax.swing.text.DefaultFormatterFactory(
                                     new javax.swing.text.MaskFormatter("FX (+593)##-###-####")));
                     break;
-                case "FX TRABAJO":
+                case "FAX_TRABAJO":
                     txtNumero.setFormatterFactory(
                             new javax.swing.text.DefaultFormatterFactory(
                                     new javax.swing.text.MaskFormatter("FX (+593)##-###-####")));
@@ -558,7 +558,7 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
         Desactivar();
         ActualizarTabla();
     }//GEN-LAST:event_formInternalFrameActivated
-    public void Desactivar(){
+    public void Desactivar() {
         btAgregar.setEnabled(true);
         btActualizar.setEnabled(false);
         btCancelar.setEnabled(false);
@@ -573,7 +573,7 @@ public class VistaMiDirectorio extends javax.swing.JInternalFrame {
         int confirmar = JOptionPane.showConfirmDialog(null, "ELIMINAR EL TELEFONO SELECCIONADO?");
         if (JOptionPane.OK_OPTION == confirmar) {
             int codigo = Integer.valueOf(txtCodigo.getText());
-            controladorUsuario.eliminarTelefono(codigo);
+            controladorTelefono.eliminar(codigo);
             ActualizarTabla();
             JOptionPane.showMessageDialog(null, "TELEFONO ELIMINADO", "ELIMINADO", JOptionPane.INFORMATION_MESSAGE);
             Desactivar();

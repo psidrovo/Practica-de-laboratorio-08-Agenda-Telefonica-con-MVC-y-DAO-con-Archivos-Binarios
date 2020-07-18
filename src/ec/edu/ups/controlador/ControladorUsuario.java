@@ -115,7 +115,6 @@ public class ControladorUsuario {
      */
     //llama al DAO para Iniciar sesion
     public Usuario inicioSesion(String correo, String contrasena) {
-
         for (int i = correo.length(); i < 50; i++) {
             correo += " ";
         }
@@ -145,4 +144,20 @@ public class ControladorUsuario {
         usuarioDao.update(usuario);
     }
 
+    public Usuario verUsuario(){
+        return usuario;
+    }
+    public Usuario cargarDatosUsuario(String dato, String tipo){
+        Usuario us = new Usuario();
+        if (tipo.equals("CEDULA")) {
+            us=usuarioDao.buscarCedula(dato);            
+        } else {
+            for (int i = dato.length(); i < 50; i++) {
+                dato += " ";
+            }
+            dato = dato.substring(0, 50);
+            us = usuarioDao.buscarCorreo(dato);
+        }
+        return us;
+    }
 }

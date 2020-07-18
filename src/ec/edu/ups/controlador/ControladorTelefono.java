@@ -1,6 +1,7 @@
 package ec.edu.ups.controlador;
 
 import ec.edu.ups.dao.TelefonoDao;
+import ec.edu.ups.dao.UsuarioDao;
 import ec.edu.ups.modelo.Telefono;
 import ec.edu.ups.modelo.Usuario;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ControladorTelefono {
 
     private TelefonoDao telefonoDao;
+    private UsuarioDao usuarioDao;
     private Telefono telefono;
     private Usuario usuario;
 
@@ -30,9 +32,10 @@ public class ControladorTelefono {
      * @param usuario
      * @param telefonoDao
      */
-    public ControladorTelefono(TelefonoDao telefonoDao, Usuario usuario) {
+    public ControladorTelefono(TelefonoDao telefonoDao, Usuario usuario, UsuarioDao usuarioDao) {
         this.telefonoDao = telefonoDao;
         this.usuario = usuario;
+        this.usuarioDao = usuarioDao;
     }
 
     /**
@@ -133,6 +136,21 @@ public class ControladorTelefono {
 
     public List<Telefono> verTelefonosUsuario() {
         return telefonoDao.listaTelefonosUsuario(usuario);
+    }
+
+    public List<Telefono> verTelefonosUsuarioBusqueda(String dato, String tipo) {
+        Usuario us = new Usuario();
+        if (tipo.equals("CEDULA")) {
+            us.setCedula(dato);
+            return telefonoDao.listaTelefonosUsuario(us);
+        } else {
+            for (int i = dato.length(); i < 50; i++) {
+                dato += " ";
+            }
+            dato = dato.substring(0, 50);
+            us = usuarioDao.buscarCorreo(dato);
+            return telefonoDao.listaTelefonosUsuario(us);
+        }
     }
 
     public int getCodigoSiguiente() {

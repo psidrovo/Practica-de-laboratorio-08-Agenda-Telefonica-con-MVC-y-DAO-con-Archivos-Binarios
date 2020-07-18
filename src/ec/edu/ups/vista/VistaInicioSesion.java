@@ -135,7 +135,7 @@ public class VistaInicioSesion extends javax.swing.JInternalFrame {
             passwordDeco += password[x];
         }
 
-        Usuario inicioSesion = controladorUsuario.inicioSesion(txtUsuario.getText() + passwordDeco);
+        Usuario inicioSesion = controladorUsuario.inicioSesion(txtUsuario.getText(), passwordDeco);
         if (inicioSesion != null) {
             vistaPrincipal.getMisTelefonos().setEnabled(true);
             vistaPrincipal.getIniciarSesion().setEnabled(false);
@@ -146,7 +146,7 @@ public class VistaInicioSesion extends javax.swing.JInternalFrame {
             txtUsuario.setText("");
             pswContraseña.setText("");
             this.setVisible(false);
-            vistaPrincipal.getBienvenido().setText("BIENVENIDO " + inicioSesion.getNombre().toUpperCase() + " " + inicioSesion.getApellido().toUpperCase());
+            vistaPrincipal.getBienvenido().setText("BIENVENIDO " + inicioSesion.getNombre().toUpperCase().replace("  ", "") + " " + inicioSesion.getApellido().toUpperCase().replace("  ", ""));
             JOptionPane.showMessageDialog(null, "INICIO DE SESION CORRECTO", "LOGIN", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "USUARIO Y/O CONTRASEÑA INCORRECTOS", "ERROR", JOptionPane.ERROR_MESSAGE);

@@ -38,7 +38,7 @@ public class VistaEditarUsuario extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        btRegistrar = new javax.swing.JButton();
+        btGuardarDatos = new javax.swing.JButton();
         lblApellido = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
@@ -83,12 +83,12 @@ public class VistaEditarUsuario extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "EDITAR DATOS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 1, 18))); // NOI18N
 
-        btRegistrar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        btRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/iconos/salvar.png"))); // NOI18N
-        btRegistrar.setText("GUARDAR DATOS");
-        btRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        btGuardarDatos.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btGuardarDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ec/edu/ups/iconos/salvar.png"))); // NOI18N
+        btGuardarDatos.setText("GUARDAR DATOS");
+        btGuardarDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btRegistrarActionPerformed(evt);
+                btGuardarDatosActionPerformed(evt);
             }
         });
 
@@ -158,7 +158,7 @@ public class VistaEditarUsuario extends javax.swing.JInternalFrame {
                         .addGap(36, 36, 36))))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(129, 129, 129)
-                .addComponent(btRegistrar)
+                .addComponent(btGuardarDatos)
                 .addGap(135, 135, 135))
         );
         jPanel2Layout.setVerticalGroup(
@@ -189,7 +189,7 @@ public class VistaEditarUsuario extends javax.swing.JInternalFrame {
                     .addComponent(lblConfirmPassword, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pwsConfirmar))
                 .addGap(18, 18, 18)
-                .addComponent(btRegistrar)
+                .addComponent(btGuardarDatos)
                 .addGap(15, 15, 15))
         );
 
@@ -213,7 +213,7 @@ public class VistaEditarUsuario extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRegistrarActionPerformed
+    private void btGuardarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btGuardarDatosActionPerformed
         String password = "";
         char[] password2 = pwsPassword.getPassword();
         for (int x = 0; x < password2.length; x++) {
@@ -239,7 +239,7 @@ public class VistaEditarUsuario extends javax.swing.JInternalFrame {
         }
        
          
-    }//GEN-LAST:event_btRegistrarActionPerformed
+    }//GEN-LAST:event_btGuardarDatosActionPerformed
 
     private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
 
@@ -260,7 +260,7 @@ public class VistaEditarUsuario extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btRegistrar;
+    private javax.swing.JButton btGuardarDatos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblApellido;

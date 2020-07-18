@@ -279,7 +279,7 @@ public class VistaDirectorioGeneral extends javax.swing.JInternalFrame {
                 
                 JOptionPane.showMessageDialog(null, "INGRESE UN VALOR", "ERROR DE DATOS", JOptionPane.WARNING_MESSAGE);
             } else {
-                List<Telefono> listaTelefonos = controladorUsuario.verTelefonosGeneralUsuario(txtDatoBusqueda.getText(), cmdTipoDato.getSelectedItem().toString());
+                List<Telefono> listaTelefonos = controladorTelefono.verTelefonosUsuarioBusqueda(txtDatoBusqueda.getText(), cmdTipoDato.getSelectedItem().toString());
                 if (listaTelefonos != null) {
                     DefaultTableModel modelo = (DefaultTableModel) tblDirectorioGeneral.getModel();
                     modelo.setRowCount(0);
@@ -294,11 +294,11 @@ public class VistaDirectorioGeneral extends javax.swing.JInternalFrame {
                         modelo.addRow(fila);
                     }
                     this.tblDirectorioGeneral.setModel(modelo);
-                    Usuario usuarioBuscado = controladorUsuario.verUsuario();
+                    Usuario usuarioBuscado = controladorUsuario.cargarDatosUsuario(txtDatoBusqueda.getText(), cmdTipoDato.getSelectedItem().toString());
                     txtNombre.setText(usuarioBuscado.getNombre());
                     txtApellido.setText(usuarioBuscado.getApellido());
                     txtCedula.setText(usuarioBuscado.getCedula());
-                    txtCorreo.setText(usuarioBuscado.getCorreo());
+                    txtCorreo.setText(usuarioBuscado.getCorreo().replace(" ", ""));
                 } else {
                     JOptionPane.showMessageDialog(null, "NO EXISTE USUARIO", "ERROR DE DATOS", JOptionPane.WARNING_MESSAGE);
                 }
