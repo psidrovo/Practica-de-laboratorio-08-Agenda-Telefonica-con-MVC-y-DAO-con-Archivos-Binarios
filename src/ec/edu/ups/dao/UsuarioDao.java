@@ -97,10 +97,6 @@ public class UsuarioDao implements IUsuario {
         }
     }
 
-    @Override
-    public void delete(String credencial) {
-
-    }
 
     @Override
     public Usuario buscarCedula(String cedula) {

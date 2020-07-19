@@ -141,7 +141,7 @@ public class ControladorTelefono {
     public List<Telefono> verTelefonosUsuarioBusqueda(String dato, String tipo) {
         Usuario us = new Usuario();
         if (tipo.equals("CEDULA")) {
-            us.setCedula(dato);
+            us=usuarioDao.buscarCedula(dato);
             return telefonoDao.listaTelefonosUsuario(us);
         } else {
             for (int i = dato.length(); i < 50; i++) {

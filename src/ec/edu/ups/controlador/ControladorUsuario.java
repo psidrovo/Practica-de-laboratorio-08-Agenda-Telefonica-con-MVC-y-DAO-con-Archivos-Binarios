@@ -67,7 +67,6 @@ public class ControladorUsuario {
         for (int i = correo.length(); i < 50; i++) {
             correo += " ";
         }
-        correo = correo.substring(0, 50);
 
         Usuario registroUsuario = new Usuario(cedula, nombre, apellido, correo, contrasena);
         usuarioDao.create(registroUsuario);
@@ -87,7 +86,6 @@ public class ControladorUsuario {
         for (int i = correo.length(); i < 50; i++) {
             correo += " ";
         }
-        correo = correo.substring(0, 50);
 
         //Actualizamos los datos
         usuario.setCedula(cedula);
@@ -123,25 +121,6 @@ public class ControladorUsuario {
             return usuario;
         }
         return null;
-    }
-
-    public void actualizarUsuario(String nombre, String apellido, String correo) {
-        for (int i = nombre.length(); i < 50; i++) {
-            nombre += " ";
-        }
-        nombre = nombre.substring(0, 50);
-
-        for (int i = apellido.length(); i < 50; i++) {
-            apellido += " ";
-        }
-        apellido = apellido.substring(0, 50);
-
-        for (int i = correo.length(); i < 50; i++) {
-            correo += " ";
-        }
-        correo = correo.substring(0, 50);
-        usuario.actualizarDatos(nombre, apellido, correo);
-        usuarioDao.update(usuario);
     }
 
     public Usuario verUsuario(){

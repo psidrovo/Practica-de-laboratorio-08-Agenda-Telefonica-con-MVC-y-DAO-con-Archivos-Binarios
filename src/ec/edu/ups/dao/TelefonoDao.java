@@ -99,7 +99,6 @@ public class TelefonoDao implements ITelefono {
                 telefonoInterno.setCodigo(archivo.readInt());
                 if (telefonoControlador.getCodigo() == telefonoInterno.getCodigo()) {
                     archivo.seek(salto + 4);
-                    archivo.write(telefonoControlador.getCodigo());
                     archivo.writeUTF(telefonoControlador.getNumero());
                     archivo.writeUTF(telefonoControlador.getTipo());
                     archivo.writeUTF(telefonoControlador.getOperadora());
@@ -149,6 +148,7 @@ public class TelefonoDao implements ITelefono {
                 telefonoInterno.setOperadora(archivo.readUTF());
                 String cedula = archivo.readUTF();
                 if (telefonoInterno.getCodigo() != 0) {
+                    telefonoInterno.setUsuario(usuarioDao.buscarCedula(cedula));
                     todosLosTelefonos.add(telefonoInterno);
                 }
                 salto += tamanioRegistro;
@@ -163,6 +163,7 @@ public class TelefonoDao implements ITelefono {
     @Override
     public int getCodigoActual() {
         try {
+            codigo=0;
             int tamanioTotal=(int) archivo.length();
             if (archivo.length() > 0) {                
                 while(codigo==0){          
@@ -196,6 +197,7 @@ public class TelefonoDao implements ITelefono {
                 telefonoInterno.setOperadora(archivo.readUTF());
                 String cedula = archivo.readUTF();
                 if (cedula.equals(usuarioControlador.getCedula())) {
+                    telefonoInterno.setUsuario(usuarioControlador);
                     todosLosTelefonos.add(telefonoInterno);
                 }
                 salto += tamanioRegistro;

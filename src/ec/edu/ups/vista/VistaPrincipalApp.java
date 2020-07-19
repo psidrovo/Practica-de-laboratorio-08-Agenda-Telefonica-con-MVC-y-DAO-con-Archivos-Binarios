@@ -71,7 +71,7 @@ public class VistaPrincipalApp extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         
         //Idioma
-        localizacion = new Locale("es","EC");
+        localizacion = new Locale("es","ES");
         mensajes = ResourceBundle.getBundle("ec.edu.ups.idioma.mensajes", localizacion);
         cambiarIdiomaVistaPrincipal();
     }
