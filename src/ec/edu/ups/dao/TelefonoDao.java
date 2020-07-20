@@ -11,19 +11,24 @@ import java.util.List;
 
 /**
  *
- * @author Paul Idrovo
+ * @author Paul Idrovo, Denys Dutan
  */
 public class TelefonoDao implements ITelefono {
 
     /**
-     * Estructura del archivo telefono.dat
+     * Estructura del archivo telefono
+     * 
+     * private int codigo (4bytes)
+     * private String numero (25 bytes) + 2 extras
+     * private String tipo (25 bytes) + 2 extras
+     * private String operadora (25 bytes) + 2 extras
+     * private Usuario usuario (cedula ID) -> 10 bytes + 2 extras
+     * Total 97 bytes
+     * 
+     * Se instanciaron 7 atributos para esta clase.
+     * 
      */
-    // private int codigo (4bytes)
-    // private String numero (25 bytes) + 2 extras
-    // private String tipo (25 bytes) + 2 extras
-    // private String operadora (25 bytes) + 2 extras
-    // private Usuario usuario (cedula ID) -> 10 bytes + 2 extras
-    // Total 97 bytes
+ 
     private RandomAccessFile archivo;
     private int codigo;
     private int tamanioRegistro;
@@ -34,6 +39,16 @@ public class TelefonoDao implements ITelefono {
 
     private String eliminar25Bytes;
     private String eliminar10Bytes;
+    
+    /**
+     * Constructor.
+     * 
+     * En este constructor se inizializa el proceso del RandomAccessFile 
+     * con su ruta predeterminada. Tambien se inicializan algunos atributos con valores
+     * predeterminados para facilitar la interacion de la aplicacion con el archivo. 
+     * 
+     * @param usuarioDao. 
+     */
 
     public TelefonoDao(UsuarioDao usuarioDao) {
         try {
@@ -49,7 +64,16 @@ public class TelefonoDao implements ITelefono {
             System.out.println(ex);
         }
     }
-
+    
+    /**
+     * Metodo Create.
+     * 
+     * este método recibe en sus parámetros un objeto de tipo Teléfono. 
+     * Este método lo que hace es posicionarse en la ultima posición del archivo y empezar a 
+     * crear un nuevo teléfono con los datos que recibe. 
+     * 
+     * @param telefono. 
+     */
     @Override
     public void create(Telefono telefono) {
         try {
@@ -66,6 +90,18 @@ public class TelefonoDao implements ITelefono {
         }
     }
 
+    /**
+     * Metodo Read.
+     * 
+     * este método recibe en sus parámetros un código de teléfono. 
+     * Primero se instancia un entero para que empiece desde la posición inicial 
+     * del archivo y con un while recorremos el archivo. Empezamos a saltar de 
+     * dato en dato y preguntamos si es que el código que tenemos existe en 
+     * archivo de teléfonos, si es que lo encuentra retornamos ese teléfono.
+     * 
+     * @param codigo.
+     * @return telefonoIterno.
+     */
     @Override
     public Telefono read(int codigo) {
         int salto = 0;
@@ -90,6 +126,18 @@ public class TelefonoDao implements ITelefono {
         return null;
     }
 
+    /**
+     * Metodo update
+     * 
+     * este método recibe en sus parámetros un objeto de tipo Teléfono. 
+     * Primero se instancia un entero para que empiece desde la posición inicial
+     * del archivo y con un while recorremos el archivo. Empezamos a saltar de 
+     * dato en dato y preguntamos si es que el código que tenemos es igual a el
+     * teléfono en el archivo, si es que es similar solamente sobre escribimos 
+     * los nuevos datos sobre los datos antiguos.
+     * 
+     * @param telefonoControlador. 
+     */
     @Override
     public void update(Telefono telefonoControlador) {
         int salto = 0;
@@ -112,6 +160,19 @@ public class TelefonoDao implements ITelefono {
         }
     }
 
+    /**
+     * Metodo delete 
+     * 
+     * este método recibe en sus parámetros el código de un teléfono. 
+     * Primero se instancia un entero para que empiece desde la posición inicial
+     * del archivo y con un while recorremos el archivo. Empezamos a saltar de 
+     * dato en dato y preguntamos si es que el código que tenemos es igual a el 
+     * teléfono en el archivo, si es que es similar mandamos a sobrescribir los 
+     * datos con espacios vacíos de esta manera deja de existir el teléfono en 
+     * el archivo. 
+     * 
+     * @param codigo. 
+     */
     @Override
     public void delete(int codigo) {
         int salto = 0;
@@ -135,6 +196,19 @@ public class TelefonoDao implements ITelefono {
         }
     }
 
+    /**
+     * Metodo todosTelefonosGeneral.
+     * 
+     * en este método primero instanciamos un nuevo ArrayList() y un entero para
+     * que empiece desde la posición inicial del archivo y con un while 
+     * recorremos el archivo. Empezamos a saltar de dato en dato y preguntamos 
+     * si es que el código no es igual a 0 entonces extraemos todos los datos de
+     * ese teléfono y los agregamos a ArrayList. Por utlimo una vez terminado el
+     * while retornamos ese ArrayList que contiene todos los teléfonos del
+     * archivo.
+     * 
+     * @return Lista de telefonos. 
+     */
     @Override
     public List<Telefono> todosTelefonosGeneral() {
         List<Telefono> todosLosTelefonos = new ArrayList<>();
@@ -142,6 +216,7 @@ public class TelefonoDao implements ITelefono {
         try {
             while (salto < archivo.length()) {
                 archivo.seek(salto);
+                telefonoInterno=new Telefono();
                 telefonoInterno.setCodigo(archivo.readInt());
                 telefonoInterno.setNumero(archivo.readUTF());
                 telefonoInterno.setTipo(archivo.readUTF());
@@ -160,6 +235,15 @@ public class TelefonoDao implements ITelefono {
         return null;
     }
 
+    /**
+     * Metodo getCodigoActual
+     * 
+     * este método lo que hace es conseguir el ultimo código del archivo y 
+     * sumarle un valor mas, por último, retorna ese valor para asignarlo al 
+     * siguiente teléfono que se va a registrar. 
+     * 
+     * @return codigo.
+     */
     @Override
     public int getCodigoActual() {
         try {
@@ -184,6 +268,22 @@ public class TelefonoDao implements ITelefono {
         return codigo;
     }
 
+    /**
+     * Metodo listaTelefonosUsuario
+     * 
+     * este método recibe en sus parámetros un objeto de tipo Usuario. 
+     * Primero instanciamos un nuevo ArrayList() y un entero para que empiece 
+     * desde la posición inicial del archivo y con un while recorremos el 
+     * archivo. Como sabemos que al momento de crear un teléfono se agrega un 
+     * objeto de tipo usuario al teléfono solamente recorremos el archivo y 
+     * preguntamos si es que la cedula del usuario que tenemos es igual a la 
+     * cedula del usuario en el archivo. Si es que es igual agregamos los datos 
+     * del teléfono en el ArrayList, por ultimo, retornamos esa lista con los 
+     * datos.
+     * 
+     * @param usuarioControlador.
+     * @return Lista de Telefono del usuario.
+     */
     @Override
     public List<Telefono> listaTelefonosUsuario(Usuario usuarioControlador) {
         List<Telefono> todosLosTelefonos = new ArrayList<>();
@@ -191,6 +291,7 @@ public class TelefonoDao implements ITelefono {
         try {
             while (salto < archivo.length()) {
                 archivo.seek(salto);
+                telefonoInterno=new Telefono();
                 telefonoInterno.setCodigo(archivo.readInt());
                 telefonoInterno.setNumero(archivo.readUTF());
                 telefonoInterno.setTipo(archivo.readUTF());

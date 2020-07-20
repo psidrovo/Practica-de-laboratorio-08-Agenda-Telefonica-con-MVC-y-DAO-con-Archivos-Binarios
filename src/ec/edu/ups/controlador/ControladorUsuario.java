@@ -12,9 +12,11 @@ import ec.edu.ups.modelo.Usuario;
  * Esta clase manejara toda la informacion del usuario y ademas tendra acceso a
  * la lista de usuarios registrados que le pertenece a UsuarioDao, esto se debe
  * a que el cosntructor recibe al usuarioDao. Ademas podra hacer uso de los
- * telefonos disponibles en Telefono Dao
+ * telefonos disponibles en Telefono Dao.
+ * 
+ * tambien se instanciaron 2 atributos para el uso de esta clase. 
  *
- * @author Paul Idrovo
+ * @author Paul Idrovo, Denys Dutan
  */
 public class ControladorUsuario {
 
@@ -25,14 +27,14 @@ public class ControladorUsuario {
     }
 
     /**
-     * Constructor ControladorUsuario con valores iniciales. Este constrcutor
-     * recibe la vista de Usuairo, el UsuarioDao y el telefonoDao.
+     * Constructor ControladorUsuario con valores iniciales. 
+     * 
+     * Este constructor recibe la vista de Usuairo, el UsuarioDao y el 
+     * telefonoDao.
      *
-     * @see UsuarioDao
-     * @see TelefonoDao
      *
-     * @param usuarioDao - objeto tipo UsuarioDao
-     * @param telefonoDao - objeto tipo TelefonoDao
+     * @param usuarioDao. 
+     * @param telefonoDao.
      */
     public ControladorUsuario(UsuarioDao usuarioDao, TelefonoDao telefonoDao, Usuario usuario) {
         this.usuario = usuario;
@@ -40,18 +42,19 @@ public class ControladorUsuario {
     }
 
     /**
-     * Metodo Registrar.Este metodo nos ayuda a registrar un usuario, para ello
-     * con la vistaUsuario pedimos los datos para armar nuestro usuaario a
-     * registrar, de ahi UsuarioDao mediante el metodo registrarUsuario se
-     * encarga de guardar dentro del map que tenemos disponible.
+     * Metodo Registrar.
+     * 
+     * este método recibe todos los atributos de un usuario en su parámetro. 
+     * Este método lo que hace es agarrar los atributos en sus parámetros y 
+     * sumarle los espacios para que cada usuario tenga un espacio de 178 bits.
+     * Por ultimo, instancia un nuevo usuario con los atributos del parámetro
+     * y llama al DAO a que cree un nuevo usuario. 
      *
-     *
-     * @param cedula
-     * @param nombre
-     * @param apellido
-     * @param correo
-     * @param contrasena
-     * @see UsuarioDao
+     * @param cedula.
+     * @param nombre.
+     * @param apellido.
+     * @param correo.
+     * @param contrasena.
      */
     public void registrar(String cedula, String nombre, String apellido, String correo, String contrasena) {
         for (int i = nombre.length(); i < 50; i++) {
@@ -72,6 +75,22 @@ public class ControladorUsuario {
         usuarioDao.create(registroUsuario);
     }
 
+    /**
+     * Metodo actualizarDatos.
+     * 
+     * este método recibe todos los atributos de un usuario en su parámetro. 
+     * Este método lo que hace es agarrar los atributos en sus parámetros y 
+     * sumarle los espacios para que cada usuario tenga un espacio de 178 bits. 
+     * Este método llama a los Setters de la clase Usuario y ingresa los datos 
+     * directamente en los setters. Por último, llama al DAO a que actualice el
+     * usuario con los datos del parámetro.
+     * 
+     * @param cedula
+     * @param nombre
+     * @param apellido
+     * @param correo
+     * @param contrasena 
+     */
     public void actualizarDatos(String cedula, String nombre, String apellido, String correo, String contrasena) {
         for (int i = nombre.length(); i < 50; i++) {
             nombre += " ";
@@ -97,21 +116,19 @@ public class ControladorUsuario {
     }
 
     /**
-     * Metodo inicoSesion.Este metodo se encarga de pedir las credenciales
-     * mendiate la vistaUsuario que tiene el metodo iniciarSesionUsuario, este
-     * nos devolvera el credencial la misma que es la key del map, esta esta
-     * formada del correo y contraseña.Luego por el UsuarioDao comprobamos si
-     * existe y este nos va a retornar todo el Usuario, si es null significa que
-     * el Usuario no existe o no estan correctas sus credenciales
+     * Metodo inicoSesion.
+     * 
+     *este método recibe en sus parámetros el correo y la contraseña del GUI 
+     * VistaIncioSesion. Este método lo que hace primero es completar el tamaño 
+     * de los objetos para que puedan compararse con el archivo de datos. 
+     * una vez completado eso llama al usuarioDao a que comprueba si existen 
+     * esas credenciales. Por último, si es que existe retorna ese usuario si 
+     * es que no existe retorna null. 
      *
-     *
-     * @param correo
-     * @param contrasena
-     * @return usuario - objeto tipo Usuario
-     * @see VistaUsuario
-     * @see UsuarioDao
+     * @param correo.
+     * @param contrasena.
+     * @return usuario.
      */
-    //llama al DAO para Iniciar sesion
     public Usuario inicioSesion(String correo, String contrasena) {
         for (int i = correo.length(); i < 50; i++) {
             correo += " ";
@@ -122,10 +139,32 @@ public class ControladorUsuario {
         }
         return null;
     }
+    
+    /**
+     * Metodo VerUsaurio.
+     * 
+     * este método solamente retorna el usuario.
+     * 
+     * @return usuario. 
+     */
 
     public Usuario verUsuario(){
         return usuario;
     }
+    
+    /**
+     * Metodo cargarDatosUsuario
+     * 
+     * este método recibe en sus parámetros 2 objetos de tipos String. 
+     * Primero se instancia un nuevo objeto de tipo Usuario, luego se crea una 
+     * condición en la cual pregunta por que tipo de búsqueda se va a encontrar 
+     * los datos. si es que es por cedula se llama al usaurioDao.
+     * buscarCedula sino se llama a usuariosDao.buscarCorreo. 
+     * 
+     * @param dato
+     * @param tipo
+     * @return us.
+     */
     public Usuario cargarDatosUsuario(String dato, String tipo){
         Usuario us = new Usuario();
         if (tipo.equals("CEDULA")) {

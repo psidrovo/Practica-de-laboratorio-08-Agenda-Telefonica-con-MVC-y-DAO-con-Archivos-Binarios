@@ -2,7 +2,7 @@ package ec.edu.ups.modelo;
 
 /**
  *
- * @author Paul Idrovo
+ * @author Paul Idrovo, Denys Dutan
  */
 public class Telefono {
     private int codigo;
@@ -14,6 +14,17 @@ public class Telefono {
     public Telefono() {
     }
 
+    /**
+     * Constructores: 
+     * 
+     * Se instancairon dos constructores un con el constructor vacio y otro 
+     * con los atributos de la misma clase.
+     * 
+     * @param codigo. 
+     * @param numero. 
+     * @param tipo. 
+     * @param operadora.  
+     */
     public Telefono(int codigo, String numero, String tipo, String operadora) {
         this.codigo = codigo;
         this.numero = numero;
@@ -21,6 +32,13 @@ public class Telefono {
         this.operadora = operadora;
     }
 
+    /**
+     * Getters y setters
+     * 
+     * Se crearon los siguientes metodos para conseguir y para establecer los atributos de la clase.
+     * 
+     */
+    
     public int getCodigo() {
         return codigo;
     }
@@ -60,7 +78,14 @@ public class Telefono {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
+    
+    /**
+     * Hash code, Equals y ToString 
+     *  
+     * Estos metodos lo que hacen es dar un valor unico a un atributo de esta clase.
+     * 
+     */
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -88,6 +113,6 @@ public class Telefono {
 
     @Override
     public String toString() {
-        return "DATOS TELEFONO ** " + "codigo: " + codigo + " numero: " + numero + " tipo: " + tipo + " operadora: " + operadora+" **" ;
+        return "Telefono{" + "codigo=" + codigo + ", numero=" + numero + ", tipo=" + tipo + ", operadora=" + operadora + ", usuario=" + usuario + '}';
     }
 }

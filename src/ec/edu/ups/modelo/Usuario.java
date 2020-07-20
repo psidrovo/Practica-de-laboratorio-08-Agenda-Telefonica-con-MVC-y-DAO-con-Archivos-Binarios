@@ -1,13 +1,13 @@
 package ec.edu.ups.modelo;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 
 /**
  *
- * @author Paul Idrovo
+ * @author Paul Idrovo, Denys Dutan
+ * 
+ * En esta clase se instanciaron 5 atributos para poder registrar a un usuario.
+ * 
  */
 public class Usuario {
     private String cedula;
@@ -15,10 +15,22 @@ public class Usuario {
     private String apellido;
     private String correo;
     private String contrasena;
+
     
     public Usuario() {
     }
-
+    /**
+     * Constructores. 
+     * 
+     * Se instancairon dos constructores un con el constructor vacio y otro 
+     * con los atributos de la misma clase.
+     * 
+     * @param cedula.
+     * @param nombre. 
+     * @param apellido. 
+     * @param correo. 
+     * @param contrasena. 
+     */
     public Usuario(String cedula, String nombre, String apellido, String correo, String contrasena) {
         this.cedula = cedula;
         this.nombre = nombre;
@@ -27,6 +39,11 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
+    /**
+     * Getters y setters
+     * 
+     * Se crearon los siguientes metodos para conseguir y para establecer los atributos de la clase. 
+     */
     public String getCedula() {
         return cedula;
     }
@@ -73,6 +90,12 @@ public class Usuario {
         setCorreo(correo);
     }
     
+    /**
+     * Hash code, Equals y ToString 
+     *  
+     * Estos metodos lo que hacen es dar un valor unico a un atributo de esta clase.
+     * 
+     */
     
     @Override
     public int hashCode() {

@@ -18,8 +18,13 @@ import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
 /**
- *
- * @author Paul Idrovo
+ * VistaPrincipalApp
+ * 
+ * Esta interfaz permite que el usuario pueda visualizar todas las internalFrames
+ * a la misma vez el usuario pueda acceder a las multiples opciones que tiene 
+ * esta interfaz. 
+ * 
+ * @author Paul Idrovo, Denys Dutan
  */
 public class VistaPrincipalApp extends javax.swing.JFrame {
 
@@ -273,16 +278,42 @@ public class VistaPrincipalApp extends javax.swing.JFrame {
         resgistrar.setVisible(false);
         editarUsuario.setVisible(false);
     }
+    
+    /**
+     * Action Event:mnIniciarSesionActionPerformed. 
+     * 
+     * este ítem tab visualiza la interfaz de inicioSesion y oculta las demás 
+     * ventanas.
+     * 
+     * @param evt 
+     */
     private void mnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnIniciarSesionActionPerformed
         ocultar();
         inicioSesion.setVisible(true);
     }//GEN-LAST:event_mnIniciarSesionActionPerformed
 
+    /**
+     * Action Event: mnRegistrarseActionPerformed.
+     * 
+     * este ítem tab visualiza la interfaz de registrar y oculta las demás 
+     * ventanas.
+     * 
+     * @param evt 
+     */
     private void mnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnRegistrarseActionPerformed
         ocultar();
         resgistrar.setVisible(true);
     }//GEN-LAST:event_mnRegistrarseActionPerformed
 
+    /**
+     * Action Event:mnCerrarSesionActionPerformed.
+     * 
+     *  este ítem tab desactiva los ítems tabs: mnMisTelefonos, mnCerrarSesion, 
+     * mnEditarMisDatos y activa los ítems tabs: mnIniciarSesion, mnRegistrarse.
+     * Por último, cambia el lebel del fondo por la palabra “BIENVENIDO “.
+     * 
+     * @param evt 
+     */
     private void mnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnCerrarSesionActionPerformed
         ocultar();
         mnMisTelefonos.setEnabled(false);
@@ -293,31 +324,74 @@ public class VistaPrincipalApp extends javax.swing.JFrame {
         lblUsuarioLogin.setText("BIENVENIDO");
     }//GEN-LAST:event_mnCerrarSesionActionPerformed
 
+    /**
+     * Action Event: mnDirectorioGeneralActionPerformed.
+     * 
+     * este ítem tab visualiza la interfaz directorioGeneral y oculta las
+     * demás ventanas.
+     * 
+     * @param evt 
+     */
     private void mnDirectorioGeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnDirectorioGeneralActionPerformed
         ocultar();
         directorioGeneral.setVisible(true);
     }//GEN-LAST:event_mnDirectorioGeneralActionPerformed
 
+    /**
+     * Action Event: mnSalirActionPerformed.
+     * 
+     * finaliza la aplicación.
+     * @param evt 
+     */
     private void mnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_mnSalirActionPerformed
 
+    /**
+     * Action Event: mnMisTelefonosActionPerformed.
+     * 
+     * este ítem tab visualiza la interfaz miDirectorio y oculta las demás
+     * ventanas. 
+     * @param evt 
+     */
     private void mnMisTelefonosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnMisTelefonosActionPerformed
         ocultar();
         miDirectorio.setVisible(true);
     }//GEN-LAST:event_mnMisTelefonosActionPerformed
 
+    /**
+     * Action Event:mnEditarMisDatosActionPerformed.
+     * 
+     * este ítem tab visualiza la interfaz editarUsuario y oculta las 
+     * demás ventanas. 
+     * 
+     * @param evt 
+     */
     private void mnEditarMisDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnEditarMisDatosActionPerformed
         ocultar();
         editarUsuario.setVisible(true);
     }//GEN-LAST:event_mnEditarMisDatosActionPerformed
 
+    /**
+     * Action Event:mnEspañolActionPerformed.
+     * 
+     * este ítem tab configura el idioma de la aplicación al lenguaje de español.
+     * 
+     * @param evt 
+     */
     private void mnEspañolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnEspañolActionPerformed
         localizacion = new Locale("es", "ES");
         mensajes = ResourceBundle.getBundle("ec.edu.ups.idioma.mensajes", localizacion);
         cambiarIdiomaVistaPrincipal();
     }//GEN-LAST:event_mnEspañolActionPerformed
 
+    /**
+     * Action Event:mnInglesActionPerformed.
+     * 
+     * este ítem tab configura el idioma de la aplicación al lenguaje de ingles.
+     * 
+     * @param evt 
+     */
     private void mnInglesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnInglesActionPerformed
         localizacion = new Locale("en", "UK");
         mensajes = ResourceBundle.getBundle("ec.edu.ups.idioma.mensajes", localizacion);
