@@ -405,3 +405,11 @@ también se instanciaron los siguientes atributos:
 Se creo un método para que cargue los datos del usuario cada vez que se ingrese a esta interfaz. También se creo un action event en esta interfaz:
 
 	btGuardarDatosActionPerformed: este action event primero comprueba que todos los campos estén completos. Una vez comprobado llama al controlador usuario para que actualiza los datos obtenidos de los textbox. 
+	
+	
+	
+	
+	
+	
+	
+	
